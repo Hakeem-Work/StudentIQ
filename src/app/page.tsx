@@ -1,4 +1,4 @@
-'use client'
+ client'
 
 import { useState } from 'react'
 import { askModel } from '@/lib/askModel'
@@ -27,34 +27,10 @@ export default function HomePage() {
           onChange={(e) => setModel(e.target.value as 'gpt-oss-20b' | 'gpt-oss-120b')}
           className="bg-black border border-neutral-800 p-2"
         >
-          <option value="gpt-oss-20b">gpt-oss-20b (faster)</option>
+  n value="gpt-oss-20b">gpt-oss-20b (faster)</option>
           <option value="gpt-oss-120b">gpt-oss-120b (stronger)</option>
         </select>
 
-        {/* Textarea for your question */}
-        <textarea
+        {/*
           className="w-full h-32 bg-black border border-neutral-800 p-3"
-          placeholder="Type your question..."
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-
-        {/* Submit button */}
-        <button
-          type="submit"
-          className="px-4 py-2 bg-white text-black"
-          disabled={loading}
-        >
-          {loading ? 'Thinking…' : 'Ask'}
-        </button>
-      </form>
-
-      {/* Show the answer */}
-      {output && (
-        <div className="mt-4 border border-neutral-800 p-4">
-          <pre className="whitespace-pre-wrap">{output}</pre>
-        </div>
-      )}
-    </main>
-  )
-}
+          plac
