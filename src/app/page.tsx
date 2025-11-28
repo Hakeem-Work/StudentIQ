@@ -1,4 +1,4 @@
- client'
+
 
 import { useState } from 'react'
 import { askModel } from '@/lib/askModel'
