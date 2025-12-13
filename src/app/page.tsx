@@ -1,4 +1,4 @@
-'use client'
+ client'
 
 import { useState } from 'react'
 import { askModel } from '@/lib/askModel'
@@ -75,13 +75,4 @@ export default function Page() {
         />
 
         <button
-          type="submit"
-          className="px-3 sm:px-4 py-2 bg-white text-black rounded text-sm sm:text-base"
-          disabled={loading}
-        >
-          Send
-        </button>
-      </form>
-    </main>
-  )
-}
+          type="submit
