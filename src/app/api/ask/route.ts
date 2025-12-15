@@ -1,25 +1,26 @@
-
-mport { HfInference } from '@huggingface/inference'
-
-const hf = new HfInference(process.env.HF_API_KEY)
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const { prompt, model } = await req.json()
 
-  if (!prompt) {
-    return new Response(JSON.stringify({ error: 'Missing prompt' }), { status: 400 })
+  const response = await fetch(
+    `https://api-inference.huggingface.co/models/${model}`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.HF_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ inputs: prompt }),
+    }
+  )
+
+  if (!response.ok) {
+    return NextResponse.json({ error: 'Request failed' }, { status: 500 })
   }
 
-  const selectedModel =
-    model === 'gpt-oss-120b' ? 'openai/gpt-oss-120b' : 'openai/gpt-oss-20b'
+  const data = await response.json()
+  const reply = Array.isArray(data) ? data[0]?.generated_text : data.generated_text || 'No reply'
 
-  const response = await hf.textGeneration({
-    model: selectedModel,
-    inputs: prompt,
-    parameters: { max_new_tokens: 256, temperature: 0.7 }
-  })
-
-  return new Response(JSON.stringify({ output: response.generated_text }), {
-    headers: { 'Content-Type': 'application/json' }
-  })
-    }
+  return NextResponse.json({ reply })
+}
