@@ -20,7 +20,10 @@ export async function POST(req: Request) {
   }
 
   const data = await response.json()
-  const reply = Array.isArray(data) ? data[0]?.generated_text : data.generated_text || 'No reply'
+  const reply =
+    Array.isArray(data) && data[0]?.generated_text
+      ? data[0].generated_text
+      : data.generated_text || 'No reply'
 
   return NextResponse.json({ reply })
 }
