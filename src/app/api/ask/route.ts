@@ -11,21 +11,13 @@ export async function POST(req: Request) {
       )
     }
 
-    // Only allow specific models
-    const allowedModels = ['gpt-oss-20b', 'gpt-oss-120b']
-    if (!allowedModels.includes(model)) {
-      return NextResponse.json(
-        { error: `Model ${model} is not supported` },
-        { status: 400 }
-      )
-    }
-
+    // Use the new environment variable name
     const response = await fetch(
       `https://api-inference.huggingface.co/models/${model}`,
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.HF_API_KEY}`,
+          Authorization: `Bearer ${process.env.studentiq_HF_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ inputs: prompt }),
