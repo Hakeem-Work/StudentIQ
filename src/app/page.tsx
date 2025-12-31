@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { askModel } from "@/lib/askModel"
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline" // Heroicons for clean black/white icons
 
 export default function Page() {
   const [prompt, setPrompt] = useState("")
@@ -25,14 +26,12 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-lg bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-xl p-6">
+    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
+      <div className="w-full max-w-lg bg-black border border-white rounded-xl shadow-lg p-6">
         {/* App Title */}
-        <h1 className="text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-          Student IQ
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-6">Student IQ</h1>
         <p className="text-center text-gray-400 mb-6">
-          Your AI companion for smarter learning
+          Your AI companion in pure black & white
         </p>
 
         {/* Form */}
@@ -41,14 +40,14 @@ export default function Page() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Ask Student IQ anything..."
-            className="w-full p-3 rounded-xl border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full p-3 rounded-lg border border-white bg-black text-white focus:outline-none focus:ring-2 focus:ring-white resize-none"
             rows={4}
           />
 
           <select
             value={model}
             onChange={(e) => setModel(e.target.value)}
-            className="w-full p-3 rounded-xl border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-3 rounded-lg border border-white bg-black text-white focus:outline-none focus:ring-2 focus:ring-white"
           >
             <option value="gpt-oss-20b">OSS 20B</option>
             <option value="gpt-oss-120b">OSS 120B</option>
@@ -58,24 +57,24 @@ export default function Page() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-colors font-semibold shadow-lg"
+            className="w-full py-3 rounded-lg border border-white bg-black text-white hover:bg-white hover:text-black transition-colors font-semibold"
           >
-            {loading ? "Thinking..." : "Ask Student IQ"}
+            {loading ? "Thinking..." : "Ask"}
           </button>
         </form>
 
         {/* Reply Box */}
         {reply && (
-          <div className="mt-6 p-4 rounded-xl bg-gray-900 border border-gray-700">
-            <h2 className="font-semibold mb-2 text-blue-400">AI Reply:</h2>
-            <p className="text-gray-200 whitespace-pre-line">{reply}</p>
+          <div className="mt-6 p-4 rounded-lg border border-white bg-black flex items-start space-x-3">
+            <ChatBubbleLeftRightIcon className="h-6 w-6 text-white" />
+            <p className="text-white whitespace-pre-line">{reply}</p>
           </div>
         )}
       </div>
 
       {/* Footer */}
       <footer className="mt-8 text-sm text-gray-500">
-        © {new Date().getFullYear()} Student IQ · Built for smarter minds
+        © {new Date().getFullYear()} Student IQ
       </footer>
     </main>
   )
