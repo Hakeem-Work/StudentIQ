@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { askModel } from "@/lib/askModel"
 
-export default function Home() {
+export default function Page() {
   const [prompt, setPrompt] = useState("")
   const [model, setModel] = useState("gpt-oss-20b")
   const [reply, setReply] = useState("")
