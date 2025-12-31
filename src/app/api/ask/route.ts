@@ -16,6 +16,7 @@ export async function POST(req: Request) {
     // Gemini models
     const geminiModels = ['gemini-2.5-flash']
 
+    // Hugging Face branch
     if (hfModels.includes(model)) {
       const response = await fetch(
         `https://api-inference.huggingface.co/models/${model}`,
@@ -30,7 +31,10 @@ export async function POST(req: Request) {
       )
 
       if (!response.ok) {
-        return NextResponse.json({ error: 'HuggingFace request failed' }, { status: 500 })
+        return NextResponse.json(
+          { error: 'HuggingFace request failed' },
+          { status: 500 }
+        )
       }
 
       const data = await response.json()
@@ -42,6 +46,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply })
     }
 
+    // Gemini branch
     if (geminiModels.includes(model)) {
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.studentiq_GEMINI_API_KEY}`,
@@ -55,17 +60,28 @@ export async function POST(req: Request) {
       )
 
       if (!response.ok) {
-        return NextResponse.json({ error: 'Gemini request failed' }, { status: 500 })
+        return NextResponse.json(
+          { error: 'Gemini request failed' },
+          { status: 500 }
+        )
       }
 
       const data = await response.json()
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No reply'
+      const reply =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No reply'
 
       return NextResponse.json({ reply })
     }
 
-    return NextResponse.json({ error: 'Model not supported' }, { status: 400 })
+    // Unsupported model
+    return NextResponse.json(
+      { error: `Model ${model} is not supported` },
+      { status: 400 }
+    )
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 })
+    return NextResponse.json(
+      { error: err.message || 'Server error' },
+      { status: 500 }
+    )
   }
 }
